@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+
+<plugins>  
+    <plugin interceptor="com.github.pagehelper.PageHelper">  
+        <!-- config params as the following -->  
+        
+        	<!-- 配置使用的数据库 -->
+		<property name="dialect" value="mysql"></property>
+		<!--<!–分页参数合理化  –>-->  
+        <property name="reasonable" value="false "/>  
+    </plugin>  
+</plugins> 
+	<!-- 配置mapper
+	由于使用spring和mybatis的整合包进行mapper扫描，这里不需要配置了。
+	必须遵循：mapper.xml和mapper.java文件同名且在一个目录 
+	 -->
+
+ <mappers >
+<mapper resource="cn/erp/mappers/xml/TblEmpMapper.xml"/>
+<mapper resource="cn/erp/mappers/xml/TblDepMapper.xml"/>
+<mapper resource="cn/erp/mappers/xml/TblOrderMapper.xml"/>
+<mapper resource="cn/erp/mappers/xml/TblOrderdetailMapper.xml"/>
+
+<mapper resource="cn/erp/mappers/xml/TblGoodsMapper.xml"/>
+<mapper resource="cn/erp/mappers/xml/TblGoodstypeMapper.xml"/>
+<mapper resource="cn/erp/mappers/xml/TblSupplierMapper.xml"/>
+</mappers>
+
+</configuration>

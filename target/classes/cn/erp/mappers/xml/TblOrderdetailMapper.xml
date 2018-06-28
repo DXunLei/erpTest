@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblOrderdetailMapper">	
+  	  	<resultMap id="BaseResultMap" type="cn.erp.pojo.TblOrderdetail">
+		    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+		    <result column="goodsUuid" jdbcType="BIGINT" property="goodsuuid" />
+		    <result column="price" jdbcType="DOUBLE" property="price" />
+		    <result column="orderUuid" jdbcType="BIGINT" property="orderuuid" />
+		    <result column="num" jdbcType="INTEGER" property="num" />
+		    <result column="surplus" jdbcType="DOUBLE" property="surplus" />			
+			   	<association property="tblOrder" javaType="cn.erp.pojo.TblOrder">
+			   		<id column="uuid" jdbcType="BIGINT" property="uuid" />
+			   		<result column="createTime" jdbcType="BIGINT" property="createtime" />
+			   		<result column="orderNum" jdbcType="VARCHAR" property="ordernum" />		 
+			   		<result column="orderType" jdbcType="INTEGER" property="ordertype" />
+			   		<result column="type" jdbcType="INTEGER" property="type" />
+				    <result column="totalNum" jdbcType="INTEGER" property="totalnum" />
+				    <result column="totalPrice" jdbcType="DOUBLE" property="totalprice" />		   		    
+				        <association property="tblEmp" javaType="cn.erp.pojo.TblEmp">
+					     	<result column="empName" jdbcType="VARCHAR" property="name" />
+					    </association>		      
+					    <association property="tblSupplier" javaType="cn.erp.pojo.TblSupplier">
+					     	<result column="supplierName" jdbcType="VARCHAR" property="name" />
+					     	<result column="supplierUuid" jdbcType="BIGINT" property="uuid" />
+					    </association>	
+				</association>
+				<association property="tblGoods" javaType="cn.erp.pojo.TblGoods">
+					<result column="goodsName" jdbcType="VARCHAR" property="name" />
+						<association property="tblGoodstype" javaType="cn.erp.pojo.TblGoodstype">
+							<result column="goodsTypeName" jdbcType="VARCHAR" property="name" />
+	           			</association>
+	           </association>        
+		</resultMap>
+		  	  
+	<select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">  
+		SELECT a.*,b.createtime,b.orderNum,b.orderType,b.type,b.totalNum,b.totalPrice,
+    	c.name as supplierName,d.name as empName,e.name as goodsName,f.name as goodsTypeName
+			FROM  erps.tbl_orderdetail a
+    		LEFT JOIN erps.tbl_order b ON a.orderUuid=b.uuid
+    		LEFT JOIN erps.tbl_supplier c ON b.supplierUuid=c.uuid
+			LEFT JOIN erps.tbl_emp d ON b.creater=d.uuid
+    		LEFT JOIN erps.tbl_goods e ON a.goodsUuid=e.uuid
+    		LEFT JOIN erps.tbl_goodstype f ON e.goodsTypeUuid=f.uuid
+			WHERE 1=1
+				<if test="uuid!=null">
+					AND b.uuid=#{uuid}
+				</if>
+	</select>
+	
+	<select id="selectByUuid" parameterType="java.lang.Long" resultMap="BaseResultMap">  
+		SELECT a.*,c.uuid as supplierUuid,c.name as supplierName,e.name as goodsName,f.name as goodsTypeName
+			FROM  erps.tbl_orderdetail a
+    		LEFT JOIN erps.tbl_order b ON a.orderUuid=b.uuid
+    		LEFT JOIN erps.tbl_supplier c ON b.supplierUuid=c.uuid
+			LEFT JOIN erps.tbl_emp d ON b.creater=d.uuid
+    		LEFT JOIN erps.tbl_goods e ON a.goodsUuid=e.uuid
+    		LEFT JOIN erps.tbl_goodstype f ON e.goodsTypeUuid=f.uuid
+			WHERE 1=1
+				<if test="uuid!=null">
+					AND c.uuid=#{uuid}
+				</if>
+	</select>
+	
+	<insert id="insertList" parameterType="cn.erp.dto.OrderDetailExample">
+		INSERT INTO erps.tbl_orderdetail (goodsUuid,num,orderUuid,price,surplus)
+		VALUES(#{goodsUuid},#{num},#{orderUuid},#{price},#{surplus});
+	</insert>
+  
+</mapper>

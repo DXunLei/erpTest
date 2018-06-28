@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblGoodstypeMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblGoodstype">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="supplierUuid" jdbcType="BIGINT" property="supplieruuid" />
+  </resultMap>
+ 
+ <select id="selectList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+ SELECT * FROM erps.tbl_goodstype WHERE 1=1
+ <if test="supplierUuid !=null">
+ AND supplierUuid=#{supplierUuid}
+ </if>
+ </select>
+ 
+ 
+ 
+ 
+</mapper>

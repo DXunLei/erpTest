@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblSupplierMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblSupplier">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="tele" jdbcType="VARCHAR" property="tele" />
+    <result column="needs" jdbcType="INTEGER" property="needs" />
+  </resultMap>
+  
+  <select id="selectList" resultMap="BaseResultMap">
+  SELECT * FROM erps.tbl_supplier WHERE 1=1
+  </select>
+  
+  
+  
+  <sql id="Base_Column_List">
+    uuid, name, address, contact, tele, needs
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_supplier
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_supplier
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.erp.pojo.TblSupplier">
+    insert into tbl_supplier (uuid, name, address, 
+      contact, tele, needs
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{tele,jdbcType=VARCHAR}, #{needs,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.erp.pojo.TblSupplier">
+    insert into tbl_supplier
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="tele != null">
+        tele,
+      </if>
+      <if test="needs != null">
+        needs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="needs != null">
+        #{needs,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.erp.pojo.TblSupplier">
+    update tbl_supplier
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        tele = #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="needs != null">
+        needs = #{needs,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.erp.pojo.TblSupplier">
+    update tbl_supplier
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      tele = #{tele,jdbcType=VARCHAR},
+      needs = #{needs,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblGoodsMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblGoods">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="origin" jdbcType="VARCHAR" property="origin" />
+    <result column="producer" jdbcType="VARCHAR" property="producer" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="inPrice" jdbcType="DOUBLE" property="inprice" />
+    <result column="outPrice" jdbcType="DOUBLE" property="outprice" />
+    <result column="goodsTypeUuid" jdbcType="BIGINT" property="goodstypeuuid" />
+    <result column="useNum" jdbcType="INTEGER" property="usenum" />
+    <result column="minNum" jdbcType="INTEGER" property="minnum" />
+    <result column="maxNum" jdbcType="INTEGER" property="maxnum" />
+  </resultMap>
+ 
+ 	<select id="selectList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+ 	SELECT * FROM erps.tbl_goods  WHERE 1=1
+ 	<if test="goodsTypeUuid!=null">
+ 	AND goodsTypeUuid=#{goodsTypeUuid}
+ 	</if>
+ 	</select>
+ 
+ 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+ 	SELECT * FROM erps.tbl_goods  WHERE 1=1
+ 	
+ 	AND uuid=#{uuid}
+ 
+ 	</select>
+ 
+</mapper>

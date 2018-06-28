@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblDepMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblDep">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="tele" jdbcType="VARCHAR" property="tele" />
+  </resultMap>
+  
+   
+  <select id="selectList" parameterType="cn.erp.dto.DepExample" resultMap="BaseResultMap">
+  	select * from erps.tbl_dep where 1=1
+  </select>
+  
+  
+
+  <sql id="Base_Column_List">
+    uuid, name, tele
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_dep
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_dep
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.erp.pojo.TblDep">
+    insert into tbl_dep (uuid, name, tele
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{tele,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.erp.pojo.TblDep">
+    insert into tbl_dep
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="tele != null">
+        tele,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        #{tele,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.erp.pojo.TblDep">
+    update tbl_dep
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tele != null">
+        tele = #{tele,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.erp.pojo.TblDep">
+    update tbl_dep
+    set name = #{name,jdbcType=VARCHAR},
+      tele = #{tele,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

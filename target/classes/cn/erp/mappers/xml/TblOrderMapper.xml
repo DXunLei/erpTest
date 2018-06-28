@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblOrderMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblOrder">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="orderNum" jdbcType="VARCHAR" property="ordernum" />
+    <result column="creater" jdbcType="BIGINT" property="creater" />
+    <result column="createTime" jdbcType="BIGINT" property="createtime" />
+    <result column="checker" jdbcType="BIGINT" property="checker" />
+    <result column="checkTime" jdbcType="BIGINT" property="checktime" />
+    <result column="completer" jdbcType="BIGINT" property="completer" />
+    <result column="endTime" jdbcType="BIGINT" property="endtime" />
+    <result column="orderType" jdbcType="INTEGER" property="ordertype" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="totalNum" jdbcType="INTEGER" property="totalnum" />
+    <result column="totalPrice" jdbcType="DOUBLE" property="totalprice" />
+    <result column="supplierUuid" jdbcType="BIGINT" property="supplieruuid" />
+    
+    <collection property="tblEmp" ofType="cn.erp.pojo.TblEmp">
+     	<result column="empname" jdbcType="VARCHAR" property="name" />
+    </collection>
+      
+    <collection property="tblSupplier" ofType="cn.erp.pojo.TblSupplier">
+     	<result column="name" jdbcType="VARCHAR" property="name" />
+    </collection>
+  </resultMap>
+  
+  	<select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	SELECT a.*,b.name,c.name as empname FROM erps.tbl_order a LEFT JOIN erps.tbl_supplier b on a.supplierUuid=b.uuid
+	LEFT JOIN erps.tbl_emp c on a.creater=c.uuid WHERE 1=1
+	<if test="uuid!=null and uuid!=''">
+	AND a.uuid=#{uuid}
+	</if>
+  	</select>
+  
+  
+	<select id="selectByName" parameterType="cn.erp.dto.OrderExample" resultMap="BaseResultMap">
+	SELECT a.*,b.name,c.name as empname FROM erps.tbl_order a LEFT JOIN erps.tbl_supplier b on a.supplierUuid=b.uuid
+	LEFT JOIN erps.tbl_emp c on a.creater=c.uuid WHERE 1=1
+	<if test="tblEmp.name!=null and tblEmp.name!=''">
+	AND c.name LIKE CONCAT('%',#{tblEmp.name},'%')
+	</if>
+	<if test="createtime!=null and createtime!=''">
+	AND a.createTime&gt;=#{createtime}
+	</if>
+	<if test="endtime!=null and endtime!=''">
+	AND a.createTime&lt;=#{endtime}
+	</if>
+	<if test="begintotalnum!=null and begintotalnum!=''">
+	AND a.totalNum&gt;=#{begintotalnum}
+	</if>
+	<if test="endtotalnum!=null and endtotalnum!=''">
+	AND a.totalNum&lt;=#{endtotalnum}
+	</if>
+	<if test="begintotalprice!=null and begintotalprice!=''">
+	AND a.totalPrice&gt;=#{begintotalprice}
+	</if>
+	<if test="endtotalprice!=null and endtotalprice!=''">
+	AND a.totalPrice&lt;=#{endtotalprice}
+	</if>
+	</select>  
+  
+    <select id="selectList" parameterType="cn.erp.dto.OrderExample" resultMap="BaseResultMap">
+  	select a.*,b.name,c.name as empname from erps.tbl_order a left join erps.tbl_supplier b on a.supplierUuid=b.uuid
+	left join erps.tbl_emp c on a.creater=c.uuid where 1=1
+  	</select>
+  
+  	<update id="updateType" parameterType="java.lang.Long">
+  	UPDATE erps.tbl_order SET type=1 WHERE 1=1
+  	<if test="uuid!=null and uuid!=''">
+  	AND uuid=#{uuid}
+  	</if>
+  	</update>
+  	
+  	<insert id="insertSupplierUuid" parameterType="cn.erp.dto.OrderExample">
+  		INSERT INTO erps.tbl_order (supplierUuid) VALUES(#{supplierUuid})
+  		<selectKey keyProperty="uuid" order="AFTER" resultType="java.lang.Long">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+  	</insert>
+  
+  
+</mapper>

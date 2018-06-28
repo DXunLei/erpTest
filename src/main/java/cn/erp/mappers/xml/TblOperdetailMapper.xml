@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblOperdetailMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblOperdetail">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="empUuid" jdbcType="BIGINT" property="empuuid" />
+    <result column="operTime" jdbcType="BIGINT" property="opertime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="goodsUuid" jdbcType="BIGINT" property="goodsuuid" />
+    <result column="storeUuid" jdbcType="BIGINT" property="storeuuid" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, empUuid, operTime, type, goodsUuid, storeUuid, num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_operdetail
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_operdetail
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.erp.pojo.TblOperdetail">
+    insert into tbl_operdetail (uuid, empUuid, operTime, 
+      type, goodsUuid, storeUuid, 
+      num)
+    values (#{uuid,jdbcType=BIGINT}, #{empuuid,jdbcType=BIGINT}, #{opertime,jdbcType=BIGINT}, 
+      #{type,jdbcType=INTEGER}, #{goodsuuid,jdbcType=BIGINT}, #{storeuuid,jdbcType=BIGINT}, 
+      #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.erp.pojo.TblOperdetail">
+    insert into tbl_operdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="empuuid != null">
+        empUuid,
+      </if>
+      <if test="opertime != null">
+        operTime,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="goodsuuid != null">
+        goodsUuid,
+      </if>
+      <if test="storeuuid != null">
+        storeUuid,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="empuuid != null">
+        #{empuuid,jdbcType=BIGINT},
+      </if>
+      <if test="opertime != null">
+        #{opertime,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="goodsuuid != null">
+        #{goodsuuid,jdbcType=BIGINT},
+      </if>
+      <if test="storeuuid != null">
+        #{storeuuid,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.erp.pojo.TblOperdetail">
+    update tbl_operdetail
+    <set>
+      <if test="empuuid != null">
+        empUuid = #{empuuid,jdbcType=BIGINT},
+      </if>
+      <if test="opertime != null">
+        operTime = #{opertime,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="goodsuuid != null">
+        goodsUuid = #{goodsuuid,jdbcType=BIGINT},
+      </if>
+      <if test="storeuuid != null">
+        storeUuid = #{storeuuid,jdbcType=BIGINT},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.erp.pojo.TblOperdetail">
+    update tbl_operdetail
+    set empUuid = #{empuuid,jdbcType=BIGINT},
+      operTime = #{opertime,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      goodsUuid = #{goodsuuid,jdbcType=BIGINT},
+      storeUuid = #{storeuuid,jdbcType=BIGINT},
+      num = #{num,jdbcType=INTEGER}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.erp.mappers.TblEmpMapper">
+  <resultMap id="BaseResultMap" type="cn.erp.pojo.TblEmp">
+    <id column="uuid" jdbcType="BIGINT" property="uuid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tele" jdbcType="VARCHAR" property="tele" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="birthday" jdbcType="BIGINT" property="birthday" />
+    <result column="depUuid" jdbcType="BIGINT" property="depuuid" />
+    <result column="roleId" jdbcType="BIGINT" property="roleid" />
+    <result column="lastLoginIp" jdbcType="VARCHAR" property="lastloginip" />
+    <result column="logintimes" jdbcType="INTEGER" property="logintimes" />
+    
+    <association property="tblDep" javaType="cn.erp.pojo.TblDep">
+    	 <result column="depName" jdbcType="INTEGER" property="name" />
+    </association>
+  </resultMap>
+
+  <select id="selectByName"  parameterType="cn.erp.dto.EmpExample" resultMap="BaseResultMap">
+  	SELECT a.*,b.name as depName FROM erps.tbl_emp a LEFT JOIN erps.tbl_dep b a.depUuid=b.uuid WHERE 1=1
+  	
+  	<if test="username!=null and username!=''">
+  	AND a.userName LIKE CONCAT('%',#{username},'%')
+  	</if>
+  	 
+  </select>
+  
+  <!-- <if test="username!=null and username!=''">
+  	AND userName LIKE CONCAT('%',#{username},'%')
+  	</if>  -->
+  
+  
+  <select id="selectByExample" parameterType="cn.erp.dto.EmpExample" resultMap="BaseResultMap">
+  	select * from erps.tbl_emp where 1=1
+  	<if test="username!=null">
+  	and userName=#{username}
+  	</if>
+  	<if test="pwd!=null">
+  	and pwd=#{pwd}
+  	</if>
+  </select>
+</mapper>
